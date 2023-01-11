@@ -63,9 +63,6 @@ The above multi-account structure can be expanded upon for further sub-division.
 ## Deployment
 see [Deployment Guide](documentation/deployment.md)
 
-## Clean Up
-see [Clean Up](documentation/clean-up.md)
-
 ---
 
 Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
