@@ -17,7 +17,7 @@ This solution covers two main topics:
 This section describes the overall solution architecture.
 
 ### Overview
-![Solution overview](design/sagemaker-external-repo-access-solution-overview.png)
+![Solution overview](design/sagemaker-external-repo-access-solution-overview.jpeg)
 
 **1 – Data Scientist Self-Service Model**  
 The data scientist pulls the current version of the public repository request CSV file from the private GitHub repository, appends desired additional public repositories to the request record, then pushes the updated request file back to the private repository.
