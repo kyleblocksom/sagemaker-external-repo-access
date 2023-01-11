@@ -1,4 +1,5 @@
 # Securing Access to External Package Repositories Using AWS CodeSuite Automation
+---
 The goal of this solution is to demonstrate the deployment of AWS CodeSuite Services (i.e., CodeBuild, CodePipeline) to orchestrate secure MLOps access to external package repositories in a data science environment with multi-layer security.
 
 This GitHub repository is intended to accomany the blog post, [Securing Access to External Package Repositories Using AWS CodeSuite Automation](https://aws.amazon.com/blogs/).
