@@ -26,7 +26,7 @@ The data scientist pulls the current version of the public repository request CS
 **2, 3 – External Repository Ingest**  
 AWS CodePipeline execution is triggered based on the latest request file check-in. CodePipeline orchestrates one build and one test stage via AWS CodeBuild. During the build stage, CodeBuild parses the request file, identifies the new public repository to ingest, then executes git clone on the remote repository. Centralized internet egress is facilitated from through the Customer Networking Account, which the Customer InfoSec Account is connected to through a Transit Gateway (TGW) Attachment.
 
-**4 Infrastructure Security**  
+**4 – Infrastructure Security**  
 Centralized internet egress occurs through a NAT Gateway (NGW) attached to the egress VPC in the Customer Networking Account, reducing the cost associated with a distributed model where NGWs are deployed in every spoke VPC. The Elastic IP (EIP) of the NAT Gateway provides customers with a single IP address that they can include in their allow-list for ingress into other external networks. 
 
 **5, 6, 7, 8, 9 – Automated Security Scanning and Results Notification**  
