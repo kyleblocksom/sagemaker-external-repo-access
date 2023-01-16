@@ -63,7 +63,10 @@ The above multi-account structure can be expanded upon for further sub-division.
 - **Data Management:** accounts: Stores and manages all data for the machine learning process with strong data security and governance practices using [AWS Data Lake](https://aws.amazon.com/solutions/implementations/data-lake-solution/) and [AWS Lake Formation](https://aws.amazon.com/lake-formation/).
 
 ## Deployment
-see [Deployment Guide](documentation/deployment.md)
+see [Deployment Guide](documentation/deployment-guide.md)
+
+## Testing & Validation
+see [Testing & Validation](documentation/testing-and-validation.md)
 
 ---
 
