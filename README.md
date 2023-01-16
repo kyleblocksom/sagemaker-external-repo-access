@@ -56,7 +56,7 @@ The solution follows the multi-account approach by deploying separate CloudForma
 - **Customer Networking Account:** Isolates the networking services, configuration, and operation from the individual application workloads, security, and other infrastructure. 
 - **Customer InfoSec Account:** Dedicated to operating security services, monitoring AWS accounts, and automating security alerting and response.
 
-The above multi-account structure can be expanded upon for further sub-division. Each of these account groups can have multiple AWS accounts and environments for development and testing of services and storing different type of data: 
+The above multi-account structure can be expanded upon for further sub-division. Each of these account groups can have multiple AWS accounts and environments for development and testing of services and storing different data classifications: 
 
 ❗ For production environments, we recommend the use of two additional account groups:
 - **Shared Services:** accounts: Hosts common resources like team code repositories, CI/CD pipelines for MLOps workflows, Docker image repositories, Service Catalog portfolios, and model registries. 
