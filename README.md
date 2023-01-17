@@ -69,8 +69,8 @@ see [Deployment Guide](documentation/deployment-guide.md)
 ## Testing & Validation
 see [Testing & Validation](documentation/testing-and-validation.md)
 
-## Clean-Up
-see [Clean-Up](documentation/clean-up.md)
+## Clean Up
+see [Clean Up](documentation/clean-up.md)
 
 ---
 
