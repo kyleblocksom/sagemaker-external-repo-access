@@ -12,6 +12,7 @@ This solution covers two main topics:
 - [Solution Architecture](#solution-architecture)
 - [Multi-Account Configuration](#multi-account-configuration)
 - [Deployment Guide](#deployment)
+- [Testing & Validation](#testing-and-validation)
 - [Clean Up](#clean-up)
 
 ## Solution Architecture
@@ -67,6 +68,9 @@ see [Deployment Guide](documentation/deployment-guide.md)
 
 ## Testing & Validation
 see [Testing & Validation](documentation/testing-and-validation.md)
+
+## Clean-Up
+see [Clean-Up](documentation/clean-up.md)
 
 ---
 
