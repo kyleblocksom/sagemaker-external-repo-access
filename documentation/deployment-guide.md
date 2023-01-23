@@ -79,25 +79,31 @@ The following section provides instructions for deploying the paramterized [exte
 The stack (`external-repo-access.yaml`) provisions the following primary resources:
 1. CodePipeline Pipeline to orchestrate solution workflow.
 2. CodePipeline Artifact Bucket for storing stages' compressed input and output artifacts.
-3. CodeBuild Project and service role to retrieve SSH key from Secrets Manager to clone, compress, then upload external repo branch to CodePipeline Artifact Bucket.
-4. CodePipeline Custom Action Type to invoke CodePipeline and Git webhook on user commits to Git repo. Custom Source Action triggers CloudWatch Events rule to trigger Lambda execution of CodeBuild Project.
-5. Lambda function and execution role to trigger CodeBuild Project.
-6. KMS key to store SSH keys.
+3. CodePipeline Custom Action Type to invoke CodePipeline and Git webhook on user commits to Git repo. Custom Source Action triggers CloudWatch Events rule to trigger Lambda execution of CodeBuild Project.
+4. Lambda function and execution role to trigger CodeBuild Project.
+5. KMS key to store SSH keys.
+6. CodeBuild Project and service role to retrieve SSH key from Secrets Manager to clone, compress, then upload external repo branch to CodePipeline Artifact Bucket.
 
 The following command uses the default values for the deployment options. You can specify parameters via `ParameterKey=<ParameterKey>,ParameterValue=<Value>` pairs in the `aws cloudformation create-stack` call:
 ```sh
-STACK_NAME="sm-mlops-core"
+# Use default or provide your own names
+STACK_NAME="sm-mlops-env"
+ENV_NAME="sm-mlops"
 
 [[ unset"${S3_BUCKET_NAME}" == "unset" ]] && echo "\e[1;31mERROR: S3_BUCKET_NAME is not set" || echo "\e[1;32mS3_BUCKET_NAME is set to ${S3_BUCKET_NAME}"
 
 aws cloudformation create-stack \
-    --template-url https://s3.$AWS_DEFAULT_REGION.amazonaws.com/$S3_BUCKET_NAME/sagemaker-mlops/core-main.yaml \
+    --template-url https://s3.$AWS_DEFAULT_REGION.amazonaws.com/$S3_BUCKET_NAME/sagemaker-mlops/env-main.yaml \
     --region $AWS_DEFAULT_REGION \
-    --stack-name $STACK_NAME  \
+    --stack-name $STACK_NAME \
     --disable-rollback \
-    --capabilities CAPABILITY_IAM CAPABILITY_NAMED_IAM \
+    --capabilities CAPABILITY_NAMED_IAM \
     --parameters \
-        ParameterKey=StackSetName,ParameterValue=$STACK_NAME
+        ParameterKey=EnvName,ParameterValue=$ENV_NAME \
+        ParameterKey=EnvType,ParameterValue=dev \
+        ParameterKey=AvailabilityZones,ParameterValue=${AWS_DEFAULT_REGION}a\\,${AWS_DEFAULT_REGION}b \
+        ParameterKey=NumberOfAZs,ParameterValue=2 \
+        ParameterKey=SeedCodeS3BucketName,ParameterValue=$S3_BUCKET_NAME
 ```
 
 The previous command launches the stack deployment and returns the `StackId`. You can track the stack deployment status in [AWS CloudFormation console](https://console.aws.amazon.com/cloudformation/home?region=us-east-1#/stacks?filteringStatus=active&filteringText=&viewNested=true&hideStacks=false) or in your terminal with the following command:
