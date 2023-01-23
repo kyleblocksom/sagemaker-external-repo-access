@@ -1,7 +1,7 @@
 # Deployment Guide
 ---
 ## Deployment Workflow
-The below workflow diagram highlights the end-to-end deployment process that is detailed within this guide:
+The below workflow diagram visualizes the end-to-end deployment process that is detailed within this guide:
 ![](../img/deployment-workflow.svg)
 
 ## Pre-Deployment
@@ -72,38 +72,17 @@ cfn_nag_scan --input-path <path to cloudformation json>
 ```
 
 ## Deployment 
+The following section provides instructions for deploying the paramterized [external-repo-access.yaml](../cfn/external-repo-access.yaml) CloudFormation template into your AWS account. You can also deploy the solution using the [external-repo-access.sh](../shell/external-repo-access.sh) shell script. 
 
-The following section provides step-by-step deployment instructions
-You can also find all CLI commands in the delivered shell scripts in the project folder `test`.
+❗ Both deployment options require that you specify valid CloudFormation paramaters for your prerequisite AWS resources (e.g., VPC, subntes, S3 bucket) and GitHub environment settings (e.g., Branch, GitURL) to be used for stack deployment. Set the corresponding CloudFormation parameters to names, values, and resource IDs of your existing resources.
 
-### Two-step deployment via CloudFormation
-With this option you provision a data science environment in two steps, each with its own CloudFormation template. You can control all deployment parameters.  
-
-📜 Use this option if you want to parametrize every aspect of the deployment based on your specific requirements and environment.
-
-❗ You can select your existing VPC and network resources (subnets, NAT gateways, route tables) and existing IAM resources to be used for stack set deployment. Set the corresponding CloudFormation parameters to names and ARNs or your existing resources.
-
-❗ You must specify the valid OU IDs for the `OrganizationalUnitStagingId`/`OrganizationalUnitProdId` **or** `StagingAccountList`/`ProductionAccountList` parameters for the `env-main.yaml` template to enable multi-account model deployment.
-
-You can use the provided [shell script](../test/cfn-test-e2e.sh) to run this deployment type or follow the commands below.
-
-#### Step 1: Deploy the core infrastructure
-❗ Make sure you package the CloudFormation templates as described in [these instructions]((../package-cfn.md)).
-
-In this step you deploy the _shared core infrastructure_ into your AWS Account. The stack (`core-main.yaml`) provisions:
-1. Shared IAM roles for data science personas and services (optional if you bring your own IAM roles)
-2. A shared services VPC and related networking resources (optional if you bring your own network configuration)
-3. An AWS Service Catalog portfolio to provide a self-service deployment for the **data science administrator** user role
-4. An ECS Fargate cluster to run a private PyPi mirror (_not implemented at this stage_)
-5. Security guardrails for your data science environment (_detective controls are not implemented at this stage_)
-
-The deployment options you can use are:
-+ `CreateIAMRoles`: default `YES`. Set to `NO` if you have created the IAM roles outside of the stack (e.g. via a separate process) - such as "Bring Your Own IAM Role (BYOR IAM)" use case
-+ `CreateSharedServices`: default `NO`. Set to `YES` if you would like to create a shared services VPC and an ECS Fargate cluster for a private PyPi mirror (_not implemented at this stage_)
-+ `CreateSCPortfolio`: default `YES`. Set to `NO`if you don't want to to deploy an AWS Service Catalog portfolio with data science environment products
-+ `DSAdministratorRoleArn`: **required** if `CreateIAMRoles=NO`, otherwise automatically provisioned
-+ `SCLaunchRoleArn`: **required** if `CreateIAMRoles=NO`, otherwise automatically provisioned
-+ `SecurityControlExecutionRoleArn`: **required** if `CreateIAMRoles=NO`, otherwise automatically provisioned
+The stack (`external-repo-access.yaml`) provisions the following primary resources:
+1. CodePipeline Pipeline to orchestrate solution workflow.
+2. CodePipeline Artifact Bucket for storing stages' compressed input and output artifacts.
+3. CodeBuild Project and service role to retrieve SSH key from Secrets Manager to clone, compress, then upload external repo branch to CodePipeline Artifact Bucket.
+4. CodePipeline Custom Action Type to invoke CodePipeline and Git webhook on user commits to Git repo. Custom Source Action triggers CloudWatch Events rule to trigger Lambda execution of CodeBuild Project.
+5. Lambda function and execution role to trigger CodeBuild Project.
+6. KMS key to store SSH keys.
 
 The following command uses the default values for the deployment options. You can specify parameters via `ParameterKey=<ParameterKey>,ParameterValue=<Value>` pairs in the `aws cloudformation create-stack` call:
 ```sh
