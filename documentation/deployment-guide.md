@@ -89,7 +89,7 @@ CloudFormation prepopulates stack parameters with the default values provided in
 ```sh
 # Clone remote repository and change working directory to CloudFormation folder
 git clone https://github.com/kyleblocksom/sagemaker-external-repo-access.git
-cd sagemaker-external-repo-access/cfn/
+cd sagemaker-external-repo-access/
 
 # Use defaults or provide your own parameter values
 STACK_NAME="external-repo-access"
@@ -123,8 +123,8 @@ ParameterKey=GitBranch,ParameterValue=${GIT_BRANCH} \
 ParameterKey=GitUrl,ParameterValue=${GIT_URL} \
 ParameterKey=GitWebHookIpAddress,ParameterValue=${GIT_WEBHOOK_IP} \
 ParameterKey=SecretsManagerArnForSSHPrivateKey,ParameterValue=${SECRETS_MANAGER_SSH_ARN} \
-ParameterKey=GitPullLambdaSubnet,ParameterValue=${SUBNET_ID1}\\,${SUBNET_ID2} \
-ParameterKey=GitPullLambdaVpc,ParameterValue=${VPC_ID} \
+ParameterKey=GitCloneLambdaSubnet,ParameterValue=${SUBNET_ID1}\\,${SUBNET_ID2} \
+ParameterKey=GitCloneLambdaVpc,ParameterValue=${VPC_ID} \
 ParameterKey=LambdaCodeS3Bucket,ParameterValue=${LAMBDA_S3_BUCKET} \
 ParameterKey=LambdaCodeS3Key,ParameterValue=${LAMBDA_S3_KEY} \
 ParameterKey=CodePipelineName,ParameterValue=${CODEPIPELINE_NAME} \
@@ -132,13 +132,15 @@ ParameterKey=CodePipelineName,ParameterValue=${CODEPIPELINE_NAME} \
 ```
 
 The previous command launches the stack deployment and returns the `StackId`. You can track the stack deployment status in [AWS CloudFormation console](https://console.aws.amazon.com/cloudformation/home?region=us-east-1#/stacks?filteringStatus=active&filteringText=&viewNested=true&hideStacks=false) or in your terminal with the following command:
+
 ```sh
 aws cloudformation describe-stacks \
     --stack-name $STACK_NAME \
     --query "Stacks[0].StackStatus"
 ```
 
-After a successful stack deployment, the status turns to from `CREATE_IN_PROGRESS` to `CREATE_COMPLETE`. You can print the stack output:
+After a successful stack deployment, the status changes from `CREATE_IN_PROGRESS` to `CREATE_COMPLETE`. You can print the stack output:
+
 ```sh
 aws cloudformation describe-stacks \
     --stack-name $STACK_NAME  \
