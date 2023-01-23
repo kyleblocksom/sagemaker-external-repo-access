@@ -84,26 +84,51 @@ The stack (`external-repo-access.yaml`) provisions the following primary resourc
 5. KMS key to store SSH keys.
 6. CodeBuild Project and service role to retrieve SSH key from Secrets Manager to clone, compress, then upload external repo branch to CodePipeline Artifact Bucket.
 
-The following command uses the default values for the deployment options. You can specify parameters via `ParameterKey=<ParameterKey>,ParameterValue=<Value>` pairs in the `aws cloudformation create-stack` call:
-```sh
-# Use default or provide your own names
-STACK_NAME="sm-mlops-env"
-ENV_NAME="sm-mlops"
+CloudFormation prepopulates stack parameters with the default values provided in the template. To provide alternative input values, you can specify parameters via `ParameterKey=<ParameterKey>,ParameterValue=<Value>` pairs in the `aws cloudformation create-stack` call. The following series of commands clones the _sagemaker-external-repo-access_ repository to your local machine so you can then create the stack using AWS CLI commands:
 
-[[ unset"${S3_BUCKET_NAME}" == "unset" ]] && echo "\e[1;31mERROR: S3_BUCKET_NAME is not set" || echo "\e[1;32mS3_BUCKET_NAME is set to ${S3_BUCKET_NAME}"
+```sh
+# Clone remote repository and change working directory to CloudFormation folder
+git clone https://github.com/kyleblocksom/sagemaker-external-repo-access.git
+cd sagemaker-external-repo-access/cfn/
+
+# Use defaults or provide your own parameter values
+STACK_NAME="external-repo-access"
+CODEPIPELINE_NAME="external-repo-pipeline"
+SOURCE_PROVIDER='CustomSourceForGit'
+SOURCE_VERSION='2'
+
+# Below parameter values acquired from 'Gather Third-Party Repository Configuration Settings' pre-deployment section
+GIT_BRANCH=<remote repo branch name>
+GIT_URL=<remote repo Git URL>
+GIT_WEBHOOK_IP=<webhook IP used by remote repo> #https://api.github.com/meta
+
+# Below parameter values acquired from 'Establish VPC Networking Configuration' pre-deployment section
+VPC_ID=<vpc with NGW and IGW>
+SUBNET_ID1=<private subnet 1 from above VPC>
+SUBNET_ID2=<private subnet 2 from above VPC>
+
+# Below parameter values acquired from 'Create SSH Key Pair' pre-deployment section
+SECRETS_MANAGER_SSH_ARN=<ARN of SSH Secret>
+
+# Below parameter values acquired from 'Create S3 and Upload Lambda Function' pre-deployment section
+LAMBDA_S3_BUCKET=<S3 bucket with compressed Lambda code>
+LAMBDA_S3_KEY=<S3 key of compressed Lambda code>
 
 aws cloudformation create-stack \
-    --template-url https://s3.$AWS_DEFAULT_REGION.amazonaws.com/$S3_BUCKET_NAME/sagemaker-mlops/env-main.yaml \
-    --region $AWS_DEFAULT_REGION \
-    --stack-name $STACK_NAME \
-    --disable-rollback \
-    --capabilities CAPABILITY_NAMED_IAM \
-    --parameters \
-        ParameterKey=EnvName,ParameterValue=$ENV_NAME \
-        ParameterKey=EnvType,ParameterValue=dev \
-        ParameterKey=AvailabilityZones,ParameterValue=${AWS_DEFAULT_REGION}a\\,${AWS_DEFAULT_REGION}b \
-        ParameterKey=NumberOfAZs,ParameterValue=2 \
-        ParameterKey=SeedCodeS3BucketName,ParameterValue=$S3_BUCKET_NAME
+--stack-name ${STACK_NAME} \
+--template-body file://$(pwd)/cfn/external-repo-access.yaml \
+--parameters ParameterKey=SourceActionVersion,ParameterValue=${SOURCE_VERSION} \
+ParameterKey=SourceActionProvider,ParameterValue=${CustomSourceForGit} \
+ParameterKey=GitBranch,ParameterValue=${GIT_BRANCH} \
+ParameterKey=GitUrl,ParameterValue=${GIT_URL} \
+ParameterKey=GitWebHookIpAddress,ParameterValue=${GIT_WEBHOOK_IP} \
+ParameterKey=SecretsManagerArnForSSHPrivateKey,ParameterValue=${SECRETS_MANAGER_SSH_ARN} \
+ParameterKey=GitPullLambdaSubnet,ParameterValue=${SUBNET_ID1}\\,${SUBNET_ID2} \
+ParameterKey=GitPullLambdaVpc,ParameterValue=${VPC_ID} \
+ParameterKey=LambdaCodeS3Bucket,ParameterValue=${LAMBDA_S3_BUCKET} \
+ParameterKey=LambdaCodeS3Key,ParameterValue=${LAMBDA_S3_KEY} \
+ParameterKey=CodePipelineName,ParameterValue=${CODEPIPELINE_NAME} \
+--capabilities CAPABILITY_IAM
 ```
 
 The previous command launches the stack deployment and returns the `StackId`. You can track the stack deployment status in [AWS CloudFormation console](https://console.aws.amazon.com/cloudformation/home?region=us-east-1#/stacks?filteringStatus=active&filteringText=&viewNested=true&hideStacks=false) or in your terminal with the following command:
