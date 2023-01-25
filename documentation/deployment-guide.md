@@ -46,7 +46,7 @@ Make a note of the Secret ARN, which you will input later as the _SecretsManager
 This solution leverages a Lambda function that polls for the job details of the CodePipeline custom source action. Once there is a change on the source branch, the Lambda function triggers AWS CodeBuild execution and passes all the job-related information.
 Once CodeBuild complete its execution, the Lambda function then sends a success message to the CodePipeline source stage so it can proceed to the next stage.
 
-The Lambda function code needs to be uploaded to an S3 bucket in the same Region where the CloudFormation stack is being deployed. To create a new S3 bucket, use the following AWS CLI commands:
+The Lambda function code needs to be uploaded to an S3 bucket in the same region where the CloudFormation stack is being deployed. To create a new S3 bucket, use the following AWS CLI commands:
 
 ```sh
 export ACCOUNT_ID=$(aws sts get-caller-identity --query Account --output text)
