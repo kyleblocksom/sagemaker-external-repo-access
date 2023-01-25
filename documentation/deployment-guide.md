@@ -70,7 +70,7 @@ brew gem install cfn-nag
 
 To initiate the security scan, run the following command:
 ```sh
-cd sagemaker-external-repo-access/cfn/
+cd ../cfn/
 cfn_nag_scan --input-path ./external-repo-access.yaml
 ```
 
