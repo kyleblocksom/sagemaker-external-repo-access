@@ -37,7 +37,7 @@ Make a note of the contents of external-repo-rsa.pub and add it as an authorized
 Next, publish your private key to AWS Secrets Manager using the AWS Command Line Interface (AWS CLI):
 
 ```sh
-export SecretsManagerArn=$(aws secretsmanager create-secret --name external-repo-rsa \
+SECRETS_MANAGER_SSH_ARN=$(aws secretsmanager create-secret --name external-repo-rsa \
 --secret-string file://external-repo-rsa --query ARN --output text)
 ```
 Make a note of the Secret ARN, which you will input later as the _SecretsManagerArnForSSHPrivateKey_ CloudFormation parameter.
@@ -49,8 +49,8 @@ Once CodeBuild complete its execution, the Lambda function then sends a success 
 The Lambda function code needs to be uploaded to an S3 bucket in the same region where the CloudFormation stack is being deployed. To create a new S3 bucket, use the following AWS CLI commands:
 
 ```sh
-export ACCOUNT_ID=$(aws sts get-caller-identity --query Account --output text)
-export S3_BUCKET_NAME=repo-clone-lambda-${ACCOUNT_ID} 
+ACCOUNT_ID=$(aws sts get-caller-identity --query Account --output text)
+S3_BUCKET_NAME=repo-clone-lambda-${ACCOUNT_ID} 
 aws s3 mb s3://${S3_BUCKET_NAME} --region us-east-1
 ```
 Clone the _sagemaker-external-repo-access Repository_ and navigate to the Lambda folder for the compressesed [Lambda code file](../lambda/repo-clone-lambda.zip), then upload the file to the S3 bucket you just created using the following commands:
