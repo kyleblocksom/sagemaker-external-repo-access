@@ -40,7 +40,7 @@ Next, publish your private key to AWS Secrets Manager using the AWS Command Line
 export SecretsManagerArn=$(aws secretsmanager create-secret --name external-repo-rsa \
 --secret-string file://external-repo-rsa --query ARN --output text)
 ```
-Make a note of the Secret ARN, which you will input later as the SecretsManagerArnForSSHPrivateKey CloudFormation parameter.
+Make a note of the Secret ARN, which you will input later as the _SecretsManagerArnForSSHPrivateKey_ CloudFormation parameter.
 
 ### Create S3 and Upload Lambda Function
 This solution leverages a Lambda function that polls for the job details of the CodePipeline custom source action. Once there is a change on the source branch, the Lambda function triggers AWS CodeBuild execution and passes all the job-related information.
