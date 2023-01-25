@@ -94,8 +94,8 @@ cd sagemaker-external-repo-access/
 # Use defaults or provide your own parameter values
 STACK_NAME="external-repo-access"
 CODEPIPELINE_NAME="external-repo-pipeline"
-SOURCE_PROVIDER='CustomSourceForGit'
-SOURCE_VERSION='2'
+SOURCE_PROVIDER='CustomGitSource'
+SOURCE_VERSION='1'
 
 # Below parameter values acquired from 'Gather Third-Party Repository Configuration Settings' pre-deployment section
 GIT_BRANCH=<remote repo branch name>
