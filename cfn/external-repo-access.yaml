@@ -106,11 +106,11 @@ Parameters:
   LambdaCodeS3Bucket:
     Description: S3 Bucket Containing Git Clone Lambda
     Type: String
-    Default: git-codepipeline-lambda-239380694500
+    Default: repo-clone-lambda-239380694500
   LambdaCodeS3Key:
     Description: S3 Key for Git Clone Lambda
     Type: String
-    Default: 'codepipeline_git.zip'
+    Default: 'repo-clone-lambda.zip'
 
 Resources:
   RepoCloneCodeBuild:
@@ -228,7 +228,8 @@ Resources:
           - Effect: Allow
             Action:
               - 'iam:PassRole'
-            Resource: '*'
+            Resource:
+              - !GetAtt CodeSuiteRole.Arn
           - Effect: Allow
             Action:
              - 'codebuild:BatchGetBuilds'
@@ -440,6 +441,7 @@ Resources:
     Type: 'AWS::KMS::Key'
     Properties:
       Description: 'git CodePipeline integration, bucket to store ssh keys'
+      EnableKeyRotation: true
       KeyPolicy:
         Version: 2012-10-17
         Statement:
