@@ -340,7 +340,7 @@ Resources:
   CodePipelineCustomActionFunction:
     Type: AWS::Lambda::Function
     Properties:
-        Handler: lambda_function.lambda_handler
+        Handler: repo-clone-lambda.lambda_handler
         VpcConfig:
           SecurityGroupIds: [!Ref RepoCloneSecurityGroup]
           SubnetIds: !Ref RepoCloneLambdaSubnet
