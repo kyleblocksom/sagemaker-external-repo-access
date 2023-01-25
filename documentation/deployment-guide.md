@@ -123,8 +123,8 @@ ParameterKey=GitBranch,ParameterValue=${GIT_BRANCH} \
 ParameterKey=GitUrl,ParameterValue=${GIT_URL} \
 ParameterKey=GitWebHookIpAddress,ParameterValue=${GIT_WEBHOOK_IP} \
 ParameterKey=SecretsManagerArnForSSHPrivateKey,ParameterValue=${SECRETS_MANAGER_SSH_ARN} \
-ParameterKey=GitCloneLambdaSubnet,ParameterValue=${SUBNET_ID1}\\,${SUBNET_ID2} \
-ParameterKey=GitCloneLambdaVpc,ParameterValue=${VPC_ID} \
+ParameterKey=RepoCloneLambdaSubnet,ParameterValue=${SUBNET_ID1}\\,${SUBNET_ID2} \
+ParameterKey=RepoCloneLambdaVpc,ParameterValue=${VPC_ID} \
 ParameterKey=LambdaCodeS3Bucket,ParameterValue=${LAMBDA_S3_BUCKET} \
 ParameterKey=LambdaCodeS3Key,ParameterValue=${LAMBDA_S3_KEY} \
 ParameterKey=CodePipelineName,ParameterValue=${CODEPIPELINE_NAME} \
