@@ -53,9 +53,10 @@ export ACCOUNT_ID=$(aws sts get-caller-identity --query Account --output text)
 export S3_BUCKET_NAME=repo-clone-lambda-${ACCOUNT_ID} 
 aws s3 mb s3://${S3_BUCKET_NAME} --region us-east-1
 ```
-Download the compressesed [Lambda code file](../lambda/repo-clone-lambda.zip) to your working directory, then upload the file to S3 bucket you just created using the following AWS CLI commands:
+Download the compressesed [Lambda code file](../lambda/repo-clone-lambda.zip) to your working directory, then upload the file to the S3 bucket you just created using the following commands:
 
 ```sh
+curl -JLO https://github.com/kyleblocksom/sagemaker-external-repo-access/raw/main/lambda/repo-clone-lambda.zip
 aws s3 cp repo-clone-lambda.zip s3://${S3_BUCKET_NAME}/repo-clone-lambda.zip
 ```
 
