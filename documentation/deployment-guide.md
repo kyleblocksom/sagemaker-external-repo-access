@@ -30,15 +30,15 @@ To authenticate with the third-party Git repository, you will use an SSH key pai
 ssh-keygen -t rsa -b 4096 -C "your_git_email@example.com"
 ```
 
-Follow the commands prompts to create a name (ex: git-codepipeline-rsa) and optional paraphrase for the key. This generates your private/public rsa key pair in the current directory: git-codepipeline-rsa and git-codepipeline-rsa.pub.
+Follow the commands prompts to create a name (ex: external-repo-rsa) and optional paraphrase for the key. This generates your private/public rsa key pair in the current directory: external-repo-rsa and external-repo-rsa.pub.
 
 Make a note of the contents of git-codepipeline-rsa.pub and add it as an authorized key for your Git user. For instructions, please see [Adding an SSH key to your GitLab account](https://docs.gitlab.com/ee/ssh/#adding-an-ssh-key-to-your-gitlab-account).
 
 Next, publish your private key to AWS Secrets Manager using the AWS Command Line Interface (AWS CLI):
 
 ```sh
-export SecretsManagerArn=$(aws secretsmanager create-secret --name git-codepipeline-rsa \
---secret-string file://git-codepipeline-rsa --query ARN --output text)
+export SecretsManagerArn=$(aws secretsmanager create-secret --name external-repo-rsa \
+--secret-string file://external-repo-rsa --query ARN --output text)
 ```
 Make a note of the Secret ARN, which you will input later as the SecretsManagerArnForSSHPrivateKey CloudFormation parameter.
 
@@ -50,13 +50,13 @@ The Lambda function code needs to be uploaded to an S3 bucket in the same Region
 
 ```sh
 export ACCOUNT_ID=$(aws sts get-caller-identity --query Account --output text)
-export S3_BUCKET_NAME=git-codepipeline-lambda-${ACCOUNT_ID} 
+export S3_BUCKET_NAME=repo-clone-lambda-${ACCOUNT_ID} 
 aws s3 mb s3://${S3_BUCKET_NAME} --region us-east-1
 ```
 Download the compressesed [Lambda code file](../lambda/git-clone-lambda.zip) to your working directory, then upload the file to S3 bucket you just created using the following AWS CLI commands:
 
 ```sh
-aws s3 cp git-clone-lambda.zip s3://${S3_BUCKET_NAME}/git-clone-lambda.zip
+aws s3 cp repo-clone-lambda.zip s3://${S3_BUCKET_NAME}/repo-clone-lambda.zip
 ```
 
 #### Optional - Run Security Scan on the CloudFormation Templates
@@ -149,12 +149,12 @@ aws cloudformation describe-stacks \
 ```
 
 ## Post-Deployment
-After you successfully deploy all CloudFormation stacks and created the needed infrastructure, you can start Studio and start working with the delivered notebooks.
+After you successfully deploy the above CloudFormation stack for securely accessing external package repositories, you can deploy Amazon SageMaker Studio into a controlled environment with multi-layer security and MLOps pipelines by following the instructions in the [Amazon SageMaker Secure MLOps Guide](https://github.com/aws-samples/amazon-sagemaker-secure-mlops).
 
 ### Start Studio
-To launch Studio you must go to [SageMaker console](https://console.aws.amazon.com/sagemaker/home?#/dashboard), click **Control panel** and click on the **Studio** in **Launch app** button on the **Users** panel:
+To launch Studio, navigate to the [SageMaker console](https://console.aws.amazon.com/sagemaker/home?#/dashboard), select **Control panel** then select **Studio** from the **Launch app** dropdown on the **Users** panel:
 
-![](../img/open-studio.png)
+![](../img/start-studio.svg)
 
 ### Clone code repository
 To use the provided notebooks you must clone the source code repository into your Studio environment.
