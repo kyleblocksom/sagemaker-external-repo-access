@@ -53,10 +53,11 @@ export ACCOUNT_ID=$(aws sts get-caller-identity --query Account --output text)
 export S3_BUCKET_NAME=repo-clone-lambda-${ACCOUNT_ID} 
 aws s3 mb s3://${S3_BUCKET_NAME} --region us-east-1
 ```
-Download the compressesed [Lambda code file](../lambda/repo-clone-lambda.zip) to your working directory, then upload the file to the S3 bucket you just created using the following commands:
+Clone the _sagemaker-external-repo-access Repository_ and navigate to the Lambda folder for the compressesed [Lambda code file](../lambda/repo-clone-lambda.zip), then upload the file to the S3 bucket you just created using the following commands:
 
 ```sh
-curl -JLO https://github.com/kyleblocksom/sagemaker-external-repo-access/raw/main/lambda/repo-clone-lambda.zip
+git clone https://github.com/kyleblocksom/sagemaker-external-repo-access.git
+cd sagemaker-external-repo-access/lambda/
 aws s3 cp repo-clone-lambda.zip s3://${S3_BUCKET_NAME}/repo-clone-lambda.zip
 ```
 
@@ -69,7 +70,8 @@ brew gem install cfn-nag
 
 To initiate the security scan, run the following command:
 ```sh
-cfn_nag_scan --input-path <path to cloudformation json>
+cd sagemaker-external-repo-access/cfn/
+cfn_nag_scan --input-path ./external-repo-access.yaml
 ```
 
 ## Deployment 
@@ -88,7 +90,7 @@ The stack (`external-repo-access.yaml`) provisions the following primary resourc
 CloudFormation prepopulates stack parameters with the default values provided in the template. To provide alternative input values, you can specify parameters via `ParameterKey=<ParameterKey>,ParameterValue=<Value>` pairs in the `aws cloudformation create-stack` call. The following series of commands clones the _sagemaker-external-repo-access_ repository to your local machine so you can then create the stack using AWS CLI commands:
 
 ```sh
-# Clone remote repository and change working directory to CloudFormation folder
+# If not already cloned, clone remote repository and change working directory to CloudFormation folder
 git clone https://github.com/kyleblocksom/sagemaker-external-repo-access.git
 cd sagemaker-external-repo-access/
 
