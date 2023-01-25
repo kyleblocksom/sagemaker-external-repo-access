@@ -30,7 +30,7 @@ To authenticate with the third-party Git repository, you will use an SSH key pai
 ssh-keygen -t rsa -b 4096 -C "your_git_email@example.com"
 ```
 
-Follow the commands prompts to create a name (ex: external-repo-rsa) and optional paraphrase for the key. This generates your private/public rsa key pair in the current directory: external-repo-rsa and external-repo-rsa.pub.
+Follow the commands prompts to create a filename (ex: external-repo-rsa) and optional paraphrase for the key. This generates your private/public rsa key pair in the current directory: external-repo-rsa and external-repo-rsa.pub.
 
 Make a note of the contents of git-codepipeline-rsa.pub and add it as an authorized key for your Git user. For instructions, please see [Adding an SSH key to your GitLab account](https://docs.gitlab.com/ee/ssh/#adding-an-ssh-key-to-your-gitlab-account).
 
