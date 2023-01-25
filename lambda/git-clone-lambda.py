@@ -52,7 +52,7 @@ def lambda_handler(event, context):
                 CodePipelineArtifactBucketPathsplit = job['data']['outputArtifacts'][0]['location']['s3Location'][
                     'objectKey'].split("/")
                 client = boto3.client(service_name='codebuild')
-                new_build = client.start_build(projectName=os.getenv('GitPullCodeBuild'),
+                new_build = client.start_build(projectName=os.getenv('RepoCloneCodeBuild'),
                                             environmentVariablesOverride=[
                                                 {
                                                     'name': 'GitUrl',
