@@ -156,12 +156,12 @@ aws cloudformation describe-stacks \
 After you successfully deploy the above CloudFormation stack for securely accessing external package repositories, you are ready to configure your webhook, integrate with your security scanning software, and experiment with SageMaker Studio Notebooks. Please proceed to [Testing & Validation](documentation/testing-and-validation.md).
 
 ## Testing & Validation
-see [Testing & Validation](documentation/testing-and-validation.md)
+see [Testing & Validation](../documentation/testing-and-validation.md)
 
 ---
 
 ## README
-see [README](/README.md)
+see [README](../README.md)
 
 ---
 
