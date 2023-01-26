@@ -75,7 +75,7 @@ cfn_nag_scan --input-path ./external-repo-access.yaml
 ```
 
 ## Deployment 
-The following section provides instructions for deploying the paramterized [external-repo-access.yaml](../cfn/external-repo-access.yaml) CloudFormation template into your AWS account. You can also deploy the solution using the [external-repo-access.sh](../shell/external-repo-access.sh) shell script. 
+The following section provides instructions for deploying the paramterized [external-repo-access.yaml](../cfn/external-repo-access.yaml) CloudFormation template into your AWS account. You can also deploy the solution using the [create-stack.sh](../shell/create-stack.sh) shell script. 
 
 ❗ Both deployment options require that you specify valid CloudFormation paramaters for your prerequisite AWS resources (e.g., VPC, subntes, S3 bucket) and GitHub environment settings (e.g., Branch, GitURL) to be used for stack deployment. Set the corresponding CloudFormation parameters to names, values, and resource IDs of your existing resources.
 
