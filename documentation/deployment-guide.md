@@ -153,7 +153,10 @@ aws cloudformation describe-stacks \
 ```
 
 ## Post-Deployment
-After you successfully deploy the above CloudFormation stack for securely accessing external package repositories, configure the webhook between your internal Git repository and CodePipeline using the _CodePipelineWebHookUrl_ output from above:
+After you successfully deploy the above CloudFormation stack for securely accessing external package repositories, 
+
+
+configure the webhook between your internal Git repository and CodePipeline using the _CodePipelineWebHookUrl_ output from above:
 
 1. Navigate to your internal Git repository.
 2. Select **Settings**.
@@ -161,6 +164,9 @@ After you successfully deploy the above CloudFormation stack for securely access
 4. Enter your _CodePipelineWebHookUrl_ output in the **Payload URL** field then select **Add webhook**.
 
 ![](../img/webhook-config.png)
+
+Once your webhook is configured, data scientist can pull the current version of the public repository request CSV file from the private GitHub repository, append desired additional public repositories to the request record, then push the updated request file back to the private repository. This will trigger the CodePipeline execution that clones the remote repositry for 
+
 
 You can deploy Amazon SageMaker Studio into a controlled environment with multi-layer security and MLOps pipelines by following the instructions in the [Amazon SageMaker Secure MLOps Guide](https://github.com/aws-samples/amazon-sagemaker-secure-mlops).
 
