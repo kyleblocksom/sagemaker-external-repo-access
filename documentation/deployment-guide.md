@@ -160,7 +160,7 @@ After you successfully deploy the above CloudFormation stack for securely access
 3. Select **Webhooks** then **Add webhook**.
 4. Enter your _CodePipelineWebHookUrl_ output in the **Payload URL** field then select **Add webhook**.
 
-![](../img/webhook-config.svg)
+![](../img/webhook-config.png)
 
 You can deploy Amazon SageMaker Studio into a controlled environment with multi-layer security and MLOps pipelines by following the instructions in the [Amazon SageMaker Secure MLOps Guide](https://github.com/aws-samples/amazon-sagemaker-secure-mlops).
 
