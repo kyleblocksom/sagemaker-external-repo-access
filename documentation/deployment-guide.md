@@ -161,7 +161,7 @@ see [Testing & Validation](documentation/testing-and-validation.md)
 ---
 
 ## README
-see [README](../README.md)
+see [README](/README.md)
 
 ---
 
