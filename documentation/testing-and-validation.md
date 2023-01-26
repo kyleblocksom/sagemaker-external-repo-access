@@ -1,5 +1,6 @@
 # Testing and Validation
 ---
+## Configure Webhook
 Once you complete the [Deployment Guide](documentation/deployment-guide.md) for securely accessing external package repositories, configure the webhook between your internal Git repository and CodePipeline using the _CodePipelineWebHookUrl_ output you retrieved from the final deployment step:
 
 1. Navigate to your internal Git repository.
@@ -9,7 +10,7 @@ Once you complete the [Deployment Guide](documentation/deployment-guide.md) for 
 
 ![](../img/webhook-config.png)
 
-### (Optional) Deploy and Launch SageMaker Studio
+## Deploy and Launch SageMaker Studio
 This section provides an overview of how to use SageMaker Studio's system terminal to pull, edit, and push file copies between local and remote repositories. You can alternatively execute your git commands from your local system terminal or other notebook environment.
 
 You can deploy Amazon SageMaker Studio into a controlled environment with multi-layer security and MLOps pipelines by following the instructions in the [Amazon SageMaker Secure MLOps Guide](https://github.com/aws-samples/amazon-sagemaker-secure-mlops).
@@ -18,11 +19,15 @@ Once Studio is deployed, navigate to the [SageMaker console](https://console.aws
 
 ![](../img/studio-console.png)
 
-### Clone code repository
-Once your webhook is configured, data scientist can pull the current version of the public repository request CSV file from the private GitHub repository, append desired additional public repositories to the request record, then push the updated request file back to the private repository. This will trigger the CodePipeline execution that clones the remote repositry for security scanning and validation.
+## Clone code repository
+Once your webhook is configured, data scientist operating in SageMaker Studio can pull the current version of the public repository request CSV file from the private GitHub repository, append desired additional public repositories to the request record, then push the updated request file back to the private repository. This will trigger the CodePipeline execution that clones the remote repositry for security scanning and validation.
 
 ```sh
-git clone https://github.com/aws-samples/amazon-sagemaker-secure-mlops.git
+git init
+git remote add origin <https://github.com/<username>/<repo>.git)>
+git checkout <branch>
+git clone <https://github.com/<username>/<repo>.git)>
+
 ```
 
 
