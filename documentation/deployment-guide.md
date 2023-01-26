@@ -1,7 +1,10 @@
 # Deployment Guide
 ---
 ## Deployment Workflow
-The below workflow diagram visualizes the end-to-end deployment process that is detailed within this guide:
+The below workflow diagram visualizes the end-to-end deployment process that is detailed within this guide. The resultant architecture includes an AWS CodePipeline worfklow orchestration that triggers based on a SSH-secured webhook with your internal Git repository. The worfklow consists of an AWS CodeBuild project to clone remote package repositories so that an additional CodeBuild project can be used to complete static application security testing, software composition analysis, dynamic code analysis, and image vulnerability scanning.
+
+❗ The security scanning software is not included in the below AWS CloudFormation deployment and testing validation because of required software licensing. The below solution will perform the initial external repository ingest, against which you could perform subsequent security scans.
+
 ![](../img/deployment-workflow.svg)
 
 ## Pre-Deployment
@@ -142,7 +145,7 @@ aws cloudformation describe-stacks \
     --query "Stacks[0].StackStatus"
 ```
 
-After a successful stack deployment, the status changes from `CREATE_IN_PROGRESS` to `CREATE_COMPLETE`. You can print the stack output:
+After a successful stack deployment, the status changes from `CREATE_IN_PROGRESS` to `CREATE_COMPLETE`. Print the stack output and retrieve the _CodePipelineWebHookUrl_ output using the below command:
 
 ```sh
 aws cloudformation describe-stacks \
@@ -152,10 +155,19 @@ aws cloudformation describe-stacks \
 ```
 
 ## Post-Deployment
-After you successfully deploy the above CloudFormation stack for securely accessing external package repositories, you can deploy Amazon SageMaker Studio into a controlled environment with multi-layer security and MLOps pipelines by following the instructions in the [Amazon SageMaker Secure MLOps Guide](https://github.com/aws-samples/amazon-sagemaker-secure-mlops).
+After you successfully deploy the above CloudFormation stack for securely accessing external package repositories, configure the webhook between your internal Git repository and CodePipeline using the _CodePipelineWebHookUrl_ output from above:
+
+1. Navigate to your internal Git repository.
+2. Select **Settings**.
+3. Select **Webhooks** then **Add webhook**.
+4. Enter your _CodePipelineWebHookUrl_ output in the **Payload URL** field then select **Add webhook**.
+
+![](../img/webhook-config.svg)
+
+You can deploy Amazon SageMaker Studio into a controlled environment with multi-layer security and MLOps pipelines by following the instructions in the [Amazon SageMaker Secure MLOps Guide](https://github.com/aws-samples/amazon-sagemaker-secure-mlops).
 
 ### Start Studio
-To launch Studio, navigate to the [SageMaker console](https://console.aws.amazon.com/sagemaker/home?#/dashboard), select **Control panel** then select **Studio** from the **Launch app** dropdown on the **Users** panel:
+To launch Studio, navigate to the [SageMaker console](https://console.aws.amazon.com/sagemaker/home?#/dashboard), select **Studio** from the menu on the left, then select **Studio** from the **Launch app** dropdown on the **Users** panel:
 
 ![](../img/start-studio.png)
 
