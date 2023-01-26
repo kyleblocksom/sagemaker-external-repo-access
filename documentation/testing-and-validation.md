@@ -1,6 +1,6 @@
 # Testing & Validation
 ---
-After you successfully deploy the above CloudFormation stack for securely accessing external package repositories, configure the webhook between your internal Git repository and CodePipeline using the _CodePipelineWebHookUrl_ output from above:
+Once you complete the [Deployment Guide](documentation/deployment-guide.md) for securely accessing external package repositories, configure the webhook between your internal Git repository and CodePipeline using the _CodePipelineWebHookUrl_ output you retrieved from the final deployment step:
 
 1. Navigate to your internal Git repository.
 2. Select **Settings**.
