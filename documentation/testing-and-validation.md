@@ -8,7 +8,9 @@ Once you complete the [Deployment Guide](documentation/deployment-guide.md) for 
 3. Select **Webhooks** then **Add webhook**.
 4. Enter your _CodePipelineWebHookUrl_ output in the **Payload URL** field, select _application/json_ under **Content type**, then select **Add webhook**.
 
-![](../img/webhook-config.png)
+<p align="center">
+  <img width="460" height="300" src="../img/webhook-config.png">
+</p>
 
 ## Deploy and Launch SageMaker Studio
 This section provides an overview of how to use SageMaker Studio's system terminal to pull, edit, and push file copies between local and remote repositories. You can alternatively execute your git commands from your local system terminal or other notebook environment.
@@ -17,7 +19,9 @@ You can deploy Amazon SageMaker Studio into a controlled environment with multi-
 
 Once Studio is deployed, navigate to the [SageMaker console](https://console.aws.amazon.com/sagemaker/home?#/dashboard), select **Studio** from the menu on the left, select your **user profile** from the dropdown, then select **Open Studio**. This will launch your Jupyter Lab environment.
 
-![](../img/studio-console.png)
+<p align="center">
+  <img width="460" height="300" src="../img/studio-console.png">
+</p>
 
 ## Clone code repository
 Once your webhook is configured, data scientist operating in SageMaker Studio can pull the current version of the public repository request CSV file from the private GitHub repository, append desired additional public repositories to the request record, then push the updated request file back to the private repository.
