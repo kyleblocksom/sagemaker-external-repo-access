@@ -24,12 +24,19 @@ Once your webhook is configured, data scientist operating in SageMaker Studio ca
 
 ```sh
 git init
+git config --global user.email "email@example.com"
+git config --global user.name "username"
 git remote add origin <https://github.com/<username>/<repo>.git)>
+git clone <https://github.com/<username>/<repo>.git)> <local-repo>
+cd <local-repo>
 git checkout <branch>
-git clone <https://github.com/<username>/<repo>.git)>
-
+vi <public-repo-request-file.csv>
+git add <public-repo-request-file.csv>
+git commit -m "modified <public-repo-request-file.csv>"
+git push -u
 ```
 
+❗ You will need to use a [personal access token](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token) when prompted for your password following the _git push -u_ command.
 
 To use the provided notebooks you must clone the source code repository into your Studio environment.
 Open a system terminal in Studio in the **Launcher** window:
@@ -48,9 +55,11 @@ Now go to the file browser and open [`00-setup` notebook](../sm-notebooks/00-set
 
 The first start of the notebook kernel on a new KernelGateway app takes about 5 minutes. Continue with the setup instructions in the notebook after Kernel is ready.
 
-❗ You have to run the whole notebook to setup your SageMaker environment.
+
 
 Now you setup your data science environment and can start experimenting.
+
+❗ The security scanning software is not included in the below AWS CloudFormation deployment and testing validation because of required software licensing. The below solution will perform the initial external repository ingest, against which you could perform subsequent security scans.
 
 
 
