@@ -3,7 +3,9 @@
 ## Deployment Workflow
 The below workflow diagram visualizes the end-to-end deployment process that is detailed within this guide. The resultant architecture includes an AWS CodePipeline worfklow orchestration that triggers based on a SSH-secured webhook with your internal Git repository. The worfklow consists of an AWS CodeBuild project to clone remote package repositories so that an additional CodeBuild project can be used to complete static application security testing, software composition analysis, dynamic code analysis, and image vulnerability scanning.
 
-![](../img/deployment-workflow.svg)
+<p align="center">
+  <img src="../img/deployment-workflow.svg">
+</p>
 
 ## Pre-Deployment
 By default, AWS CloudFormation uses a temporary session that it generates from your user credentials for stack operations. If you specify a service role, CloudFormation will instead use that role's credentials.
@@ -17,7 +19,9 @@ The CloudFormation template requires a total of eleven user-defined parameters, 
 
 Navigate to the third-party repository and note the branch name and SSH URL:
 
-![](../img/git-branch-ssh-url.svg)
+<p align="center">
+  <img src="../img/git-branch-ssh-url.svg">
+</p>
 
 ### Establish VPC Networking Configuration
 This solution requires private VPC subnets into which you can deploy your Lambda Function and CodeBuild Project. These private subnets must be deployed into a VPC that is also configured with a NAT Gateway (NGW) in a public subnet to facilitate intenret ingress and egress through an Internet Gateway.
