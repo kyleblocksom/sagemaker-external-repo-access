@@ -157,7 +157,7 @@ After you successfully deploy the above CloudFormation stack for securely access
 ### Start Studio
 To launch Studio, navigate to the [SageMaker console](https://console.aws.amazon.com/sagemaker/home?#/dashboard), select **Control panel** then select **Studio** from the **Launch app** dropdown on the **Users** panel:
 
-![](../img/start-studio.svg)
+![](../img/start-studio.png)
 
 ### Clone code repository
 To use the provided notebooks you must clone the source code repository into your Studio environment.
