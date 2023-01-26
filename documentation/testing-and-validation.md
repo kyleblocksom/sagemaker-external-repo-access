@@ -17,10 +17,14 @@ You can deploy Amazon SageMaker Studio into a controlled environment with multi-
 
 Once Studio is deployed, navigate to the [SageMaker console](https://console.aws.amazon.com/sagemaker/home?#/dashboard), select **Studio** from the menu on the left, select your **user profile** from the dropdown, then select **Open Studio**. This will launch your Jupyter Lab environment.
 
-![](../img/studio-console.png)
+![](../img/start-studio.png)
 
 ## Clone code repository
-Once your webhook is configured, data scientist operating in SageMaker Studio can pull the current version of the public repository request CSV file from the private GitHub repository, append desired additional public repositories to the request record, then push the updated request file back to the private repository. This will trigger the CodePipeline execution that clones the remote repositry for security scanning and validation.
+Once your webhook is configured, data scientist operating in SageMaker Studio can pull the current version of the public repository request CSV file from the private GitHub repository, append desired additional public repositories to the request record, then push the updated request file back to the private repository.
+
+In the SageMaker Studio IDE, open your system terminal:
+
+![](../img/studio-console.png)
 
 ```sh
 git init
@@ -35,6 +39,9 @@ git add <public-repo-request-file.csv>
 git commit -m "modified <public-repo-request-file.csv>"
 git push -u
 ```
+
+This will trigger the CodePipeline execution that clones the remote repositry for security scanning and validation. The below workflow diagram visualizes the end-to-end deployment process that is detailed within this guide. The resultant architecture includes an AWS CodePipeline worfklow orchestration that triggers based on a SSH-secured webhook with your internal Git repository. The worfklow consists of an AWS CodeBuild project to clone remote package repositories so that an additional CodeBuild project can be used to complete static application security testing, software composition analysis, dynamic code analysis, and image vulnerability scanning.
+
 
 ❗ You will need to use a [personal access token](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token) when prompted for your password following the _git push -u_ command.
 
