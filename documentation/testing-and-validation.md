@@ -9,7 +9,7 @@ Once you complete the [Deployment Guide](documentation/deployment-guide.md) for 
 4. Enter your _CodePipelineWebHookUrl_ output in the **Payload URL** field, select _application/json_ under **Content type**, then select **Add webhook**.
 
 <p align="center">
-  <img width="600" height="600" src="../img/webhook-config.png">
+  <img width="600" height="650" src="../img/webhook-config.png">
 </p>
 
 ## Deploy and Launch SageMaker Studio
