@@ -9,7 +9,7 @@ Once you complete the [Deployment Guide](documentation/deployment-guide.md) for 
 4. Enter your _CodePipelineWebHookUrl_ output in the **Payload URL** field, select _application/json_ under **Content type**, then select **Add webhook**.
 
 <p align="center">
-  <src="../img/webhook-config.png">
+  <img src="../img/webhook-config.png">
 </p>
 
 ## Deploy and Launch SageMaker Studio
@@ -20,7 +20,7 @@ You can deploy Amazon SageMaker Studio into a controlled environment with multi-
 Once Studio is deployed, navigate to the [SageMaker console](https://console.aws.amazon.com/sagemaker/home?#/dashboard), select **Studio** from the menu on the left, select your **user profile** from the dropdown, then select **Open Studio**. This will launch your Jupyter Lab environment.
 
 <p align="center">
-  <src="../img/studio-console.png">
+  <img src="../img/studio-console.png">
 </p>
 
 ## Clone code repository
