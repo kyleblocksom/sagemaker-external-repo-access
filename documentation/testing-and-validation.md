@@ -6,7 +6,7 @@ Once you complete the [Deployment Guide](documentation/deployment-guide.md) for 
 1. Navigate to your internal Git repository.
 2. Select **Settings**.
 3. Select **Webhooks** then **Add webhook**.
-4. Enter your _CodePipelineWebHookUrl_ output in the **Payload URL** field then select **Add webhook**.
+4. Enter your _CodePipelineWebHookUrl_ output in the **Payload URL** field, select _application/json_ under **Content type**, then select **Add webhook**.
 
 ![](../img/webhook-config.png)
 
