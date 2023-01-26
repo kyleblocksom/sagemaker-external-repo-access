@@ -28,7 +28,9 @@ Once your webhook is configured, data scientist operating in SageMaker Studio ca
 
 In the SageMaker Studio IDE, open your system terminal:
 
-![](../img/studio-terminal.png)
+<p align="center">
+  <img src="../img/studio-terminal.png">
+</p>
 
 Run the following commands in the terminal to clone your private repository then update and push your public repository request CSV file:
 
