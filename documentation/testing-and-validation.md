@@ -10,11 +10,20 @@ Once you complete the [Deployment Guide](documentation/deployment-guide.md) for 
 ![](../img/webhook-config.png)
 
 ### (Optional) Deploy and Launch SageMaker Studio
-To launch Studio, navigate to the [SageMaker console](https://console.aws.amazon.com/sagemaker/home?#/dashboard), select **Studio** from the menu on the left, then select **Studio** from the **Launch app** dropdown on the **Users** panel:
+This section provides an overview of how to use SageMaker Studio's system terminal to pull, edit, and push file copies between local and remote repositories. You can alternatively execute your git commands from your local system terminal or other notebook environment.
 
-![](../img/start-studio.png)
+You can deploy Amazon SageMaker Studio into a controlled environment with multi-layer security and MLOps pipelines by following the instructions in the [Amazon SageMaker Secure MLOps Guide](https://github.com/aws-samples/amazon-sagemaker-secure-mlops).
+
+Once Studio is deployed, navigate to the [SageMaker console](https://console.aws.amazon.com/sagemaker/home?#/dashboard), select **Studio** from the menu on the left, select your **user profile** from the dropdown, then select **Open Studio**. This will launch your Jupyter Lab environment.
 
 ### Clone code repository
+Once your webhook is configured, data scientist can pull the current version of the public repository request CSV file from the private GitHub repository, append desired additional public repositories to the request record, then push the updated request file back to the private repository. This will trigger the CodePipeline execution that clones the remote repositry for security scanning and validation.
+
+```sh
+git clone https://github.com/aws-samples/amazon-sagemaker-secure-mlops.git
+```
+
+
 To use the provided notebooks you must clone the source code repository into your Studio environment.
 Open a system terminal in Studio in the **Launcher** window:
 
@@ -36,11 +45,5 @@ The first start of the notebook kernel on a new KernelGateway app takes about 5 
 
 Now you setup your data science environment and can start experimenting.
 
-Once your webhook is configured, data scientist can pull the current version of the public repository request CSV file from the private GitHub repository, append desired additional public repositories to the request record, then push the updated request file back to the private repository. This will trigger the CodePipeline execution that clones the remote repositry for security scanning and validation.
 
-```sh
-git clone https://github.com/aws-samples/amazon-sagemaker-secure-mlops.git
-```
-
-You can deploy Amazon SageMaker Studio into a controlled environment with multi-layer security and MLOps pipelines by following the instructions in the [Amazon SageMaker Secure MLOps Guide](https://github.com/aws-samples/amazon-sagemaker-secure-mlops).
 
