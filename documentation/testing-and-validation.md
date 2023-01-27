@@ -52,7 +52,7 @@ git push -u
 CodePipeline is configured with custom source action that triggers based on the data scientist's commit to the webhook-enabled Git source repo. CodePipeline execution then orchestrates the CodeBuild project to clone the remote package repository so that an additional CodeBuild project can be used to perform security scans on the cloned repository artifact. You can view CodePipeline's execution status from the [CodePipeline console](https://docs.aws.amazon.com/codepipeline/latest/userguide/pipelines-view-console.html#pipelines-executions-status-console):
 
 <p align="center">
-  <img width="400" height="700" src="../img/pipeline-execution.png">
+  <img width="400" height="650" src="../img/pipeline-execution.png">
 </p>
 
 ❗ The security scanning software is not included in the below AWS CloudFormation deployment and testing validation because of required software licensing. The below solution will perform the initial external repository ingest, against which you could perform subsequent security scans.
