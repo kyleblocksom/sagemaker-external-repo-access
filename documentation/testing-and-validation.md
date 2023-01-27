@@ -62,6 +62,6 @@ In this case, the solution is expanded using a CodePipeline security test stage 
 
 
 <p align="center">
-  <img width="400" height="650" src="../img/security-scan.png">
+  <img width="400" height="650" src="../img/security-scan.svg">
 </p>
 
