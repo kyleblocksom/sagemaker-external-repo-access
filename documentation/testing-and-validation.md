@@ -47,32 +47,13 @@ git add <public-repo-request-file.csv>
 git commit -m "modified <public-repo-request-file.csv>"
 git push -u
 ```
-
-This will trigger the CodePipeline execution that clones the remote repositry for security scanning and validation. The below workflow diagram visualizes the end-to-end deployment process that is detailed within this guide. The resultant architecture includes an AWS CodePipeline worfklow orchestration that triggers based on a SSH-secured webhook with your internal Git repository. The worfklow consists of an AWS CodeBuild project to clone remote package repositories so that an additional CodeBuild project can be used to complete static application security testing, software composition analysis, dynamic code analysis, and image vulnerability scanning.
-
-
 ❗ You will need to use a [personal access token](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token) when prompted for your password following the _git push -u_ command.
 
-To use the provided notebooks you must clone the source code repository into your Studio environment.
-Open a system terminal in Studio in the **Launcher** window:
+CodePipeline is configured with custom source action that triggers based on the data scientist's commit to the webhook-enabled Git source repo. CodePipeline execution then orchestrates the CodeBuild project to clone the remote package repository so that an additional CodeBuild project can be used to perform security scans on the cloned repository artifact. You can view CodePipeline's execution status from the [CodePipeline console](https://docs.aws.amazon.com/codepipeline/latest/userguide/pipelines-view-console.html#pipelines-executions-status-console):
 
-![](../img/studio-system-terminal.png)
-
-Run the following command in the terminal:
-```sh
-git clone https://github.com/aws-samples/amazon-sagemaker-secure-mlops.git
-```
-
-This command downloads and saves the code repository in your home directory in Studio.
-Now go to the file browser and open [`00-setup` notebook](../sm-notebooks/00-setup.ipynb):
-
-![](../img/file-browser-setup.png)
-
-The first start of the notebook kernel on a new KernelGateway app takes about 5 minutes. Continue with the setup instructions in the notebook after Kernel is ready.
-
-
-
-Now you setup your data science environment and can start experimenting.
+<p align="center">
+  <img src="../img/pipeline-execution.png">
+</p>
 
 ❗ The security scanning software is not included in the below AWS CloudFormation deployment and testing validation because of required software licensing. The below solution will perform the initial external repository ingest, against which you could perform subsequent security scans.
 
