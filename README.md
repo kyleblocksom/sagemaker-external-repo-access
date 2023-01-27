@@ -36,7 +36,7 @@ CodeBuild then performs a git pull of the current results CSV file, updates the 
 
 **10, 11, 12 – MLOps Workflow**  
 The data scientist authenticates to their SageMaker Studio domain via AWS Identity Center or Identity and Access Management (IAM) mode. Each auth-mode maps to the user profile’s associated execution role that define the user’s permissible notebook actions. SageMaker Studio runs on an environment managed by AWS. Studio provides an elastic network interface (ENI) that can be deployed into a customer-managed VPC for more granular control of notebook traffic.
-The data scientist executes their SageMaker Studio notebook which installs the InfoSec validated external packages using the newly-created private repository endpoint (e.g., https://github.com/customer-org/new-repo.git).
+The data scientist executes their SageMaker Studio Notebook which installs the InfoSec validated external packages using the newly-created private repository endpoint (e.g., https://github.com/customer-org/new-repo.git).
 
 ## Multi-Account Configuration
 The following diagram highlights a multi-account structure where functional teams are isolated by the security, access, and billing boundaries of their AWS account:
