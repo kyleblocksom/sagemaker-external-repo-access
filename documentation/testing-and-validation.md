@@ -23,7 +23,7 @@ Once Studio is deployed, navigate to the [SageMaker console](https://console.aws
   <img src="../img/studio-console.png">
 </p>
 
-## Clone code repository
+## Clone External Package Repository
 Once your webhook is configured, data scientist operating in SageMaker Studio can pull the current version of the public repository request CSV file from the private GitHub repository, append desired additional public repositories to the request record, then push the updated request file back to the private repository.
 
 In the SageMaker Studio IDE, open your system terminal:
@@ -55,7 +55,13 @@ CodePipeline is configured with custom source action that triggers based on the 
   <img width="400" height="650" src="../img/pipeline-execution.png">
 </p>
 
-❗ The security scanning software is not included in the below AWS CloudFormation deployment and testing validation because of required software licensing. The below solution will perform the initial external repository ingest, against which you could perform subsequent security scans.
+## Perform Security Scans
+❗ The security scanning software is not included in the Deployment Guide's CloudFormation deployment and testing validation because of required software licensing. Up to this point, the solution performs the initial external repository ingest, against which you can perform subsequent security scans.
+
+In this case, the solution is expanded using a CodePipeline security test stage that receives the output artifact from our CodeBuild build stage. The security stage includes two actions for both the static analysis (Java API wrapper) and software composition analysis (agent-based) build projects:
 
 
+<p align="center">
+  <img width="400" height="650" src="../img/security-scans.png">
+</p>
 
