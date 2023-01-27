@@ -59,9 +59,3 @@ CodePipeline is configured with custom source action that triggers based on the 
 ❗ The security scanning software is not included in the Deployment Guide's CloudFormation deployment and testing validation because of required software licensing. Up to this point, the solution performs the initial external repository ingest, against which you can perform subsequent security scans.
 
 In this case, the solution is expanded using a CodePipeline security test stage that receives the output artifact from our CodeBuild build stage. The security stage includes two actions for both the static analysis (Java API wrapper) and software composition analysis (agent-based) build projects:
-
-
-<p align="center">
-  <img src="../img/security-scan.svg">
-</p>
-
