@@ -58,8 +58,19 @@ CodePipeline is configured with custom source action that triggers based on the 
 ## Perform Security Scans
 ❗ The security scanning software is not included in the Deployment Guide's CloudFormation deployment and testing validation because of required software licensing. Up to this point, the solution performs the initial external repository ingest, against which you can perform subsequent security scans.
 
-In this case, the solution is expanded using a CodePipeline security test stage that receives the output artifact from our CodeBuild build stage. The security stage includes two actions for both the static analysis (Java API wrapper) and software composition analysis (agent-based) build projects:
+In this case, the solution is expanded upon using a CodePipeline security test stage that receives the output artifact from our CodeBuild build stage. The security stage includes two actions for both the static analysis (Java API wrapper) and software composition analysis (agent-based) build projects. The scan results and severity findings for both actions are shown in the third-party platform's UI below:
 
 <p align="center">
   <img src="../img/security-scan.svg">
+</p>
+
+The security stage output is analyzed as part of the CodePipeline orchestration. If the security scans return severity findings greater than or equal to medium, then [stop-pipeline-execution](https://awscli.amazonaws.com/v2/documentation/api/latest/reference/codepipeline/stop-pipeline-execution.html) is used to place CodePipeline into a _Stopping_ state and a [CodePipeline notification rule](https://docs.aws.amazon.com/codepipeline/latest/userguide/notification-rule-create.html) uses Amazon Simple Email Service (SES) to email the negative results to the requesting data scientist.
+
+If the security scans return lower than medium severities, CodeBuild creates a new private repository in the customer-managed GitHub organization, then executes git push of the external package to the internal repository. CodeBuild then performs a git pull of the current results CSV file, updates the file with the outcome of the latest request, then executes a git push of the updated results file to the private repository. A CodeBuild notification rule then uses Amazon Simple Email Service (SES) to email the results, positive or negative, to the requesting data scientist.
+
+10, 11, 12 – MLOps Workflow
+The data scientist authenticates to their SageMaker Studio domain via AWS Identity Center or Identity and Access Management (IAM) mode. Each auth-mode maps to the user profile’s associated execution role that define the user’s permissible notebook actions. SageMaker Studio runs on an environment managed by AWS. Studio provides an elastic network interface (ENI) that can be deployed into a customer-managed VPC for more granular control of notebook traffic. The data scientist executes their SageMaker Studio notebook which installs the InfoSec validated external packages using the newly-created private repository endpoint (e.g., https://github.com/customer-org/new-repo.git).
+
+<p align="center">
+  <img src="../design/codepipeline-overview.svg">
 </p>
